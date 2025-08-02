@@ -1,0 +1,37 @@
+name: "airbnb_medallion"
+version: "1.0.0"
+config-version: 2
+
+profile: "airbnb_medallion"
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  airbnb_medallion:
+    +materialized: table
+    bronze:
+      +materialized: view
+      +schema: bronze
+    silver:
+      +materialized: view
+      +schema: silver
+    gold:
+      +materialized: table
+      +schema: gold
+
+seeds:
+  airbnb_medallion:
+    seed_full_moon_dates:
+      +schema: bronze
+      +materialized: seed
+      +column_types:
+        date: date

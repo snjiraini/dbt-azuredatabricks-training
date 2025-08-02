@@ -1,0 +1,44 @@
+version: 2
+
+sources:
+  - name: bronze
+    description: "Bronze layer raw data from Azure Data Lake Storage Gen2"
+    database: airbnb_medallion
+    schema: bronze
+    tables:
+      - name: listings
+        description: "Raw Airbnb listings data"
+        columns:
+          - name: id
+            description: "Unique listing identifier"
+            tests:
+              - unique
+              - not_null
+          - name: host_id
+            description: "Host identifier"
+          - name: price
+            description: "Price per night as string"
+          - name: last_review
+            description: "Date of last review"
+
+      - name: reviews
+        description: "Raw Airbnb reviews data"
+        columns:
+          - name: listing_id
+            description: "Reference to listing"
+          - name: id
+            description: "Unique review identifier"
+            tests:
+              - unique
+              - not_null
+          - name: date
+            description: "Review date"
+
+      - name: full_moon_dates
+        description: "Full moon dates for analysis (dbt seed)"
+        columns:
+          - name: date
+            description: "Full moon date"
+            tests:
+              - unique
+              - not_null
