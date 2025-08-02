@@ -6,16 +6,16 @@ with source_data as (
 
 cleaned_data as (
     select
-        cast(id as bigint) as listing_id,
+        try_cast(id as bigint) as listing_id,
         name as listing_name,
-        cast(host_id as bigint) as host_id,
+        try_cast(host_id as bigint) as host_id,
         host_name,
         neighbourhood_group,
         neighbourhood,
         latitude,
         longitude,
         room_type,
-        cast(regexp_replace(price, '[$,]', '') as decimal(10,2)) as price_per_night,
+        cast(try_cast(regexp_replace(price, '[$,]', '') as double) as decimal(10,2)) as price_per_night,
         minimum_nights,
         number_of_reviews,
         case

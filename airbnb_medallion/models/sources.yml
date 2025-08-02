@@ -2,12 +2,12 @@ version: 2
 
 sources:
   - name: bronze
-    description: "Bronze layer raw data from Azure Data Lake Storage Gen2"
+    description: "Pre-existing bronze layer tables in Databricks (external to dbt)"
     database: airbnb_medallion
-    schema: bronze
+    schema: airbnb_bronze
     tables:
       - name: listings
-        description: "Raw Airbnb listings data"
+        description: "Raw Airbnb listings data (created by external Databricks notebook)"
         columns:
           - name: id
             description: "Unique listing identifier"
@@ -22,7 +22,7 @@ sources:
             description: "Date of last review"
 
       - name: reviews
-        description: "Raw Airbnb reviews data"
+        description: "Raw Airbnb reviews data (created by external Databricks notebook)"
         columns:
           - name: listing_id
             description: "Reference to listing"
@@ -34,8 +34,8 @@ sources:
           - name: date
             description: "Review date"
 
-      - name: full_moon_dates
-        description: "Full moon dates for analysis (dbt seed)"
+      - name: seed_full_moon_dates
+        description: "Full moon dates (managed by dbt seed)"
         columns:
           - name: date
             description: "Full moon date"
